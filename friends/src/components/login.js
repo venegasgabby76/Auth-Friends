@@ -1,56 +1,45 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import axios from "axios";
 
-const Login = (props) => {
+class Login extends React.Component {
+  state = {
+     credentials: {
+         username: '',
+         password: ''
+     }
+  }
 
-    const [login, setLogin] = useState({
-        username: "",
-        password: "",
-    });
-
-    const handleChange = e => {
-        e.persist();
-        setLogin({
-            ...login,
-            [e.target.name]: e.target.value
-        });
-    }
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        setLogin({
-            username: "",
-            password: "",
-        })
-        console.log("You are logging in.")
-    }
-
-    return (
-        <div>This is the login page.
-            <form onSubmit={handleSubmit} >
-                <input
-                    type="text"
-                    placeholder="Username"
-                    name="username"
-                    id="username"
-                    value={login.username}
-                    onChange={handleChange}
-                />
-
-                <input
-                    type="text"
-                    placeholder="Password"
-                    name="password"
-                    id="password"
-                    value={login.password}
-                    onChange={handleChange}
-                />
-                <button>LOGIN</button>
-
-            </form>
-        </div>
-    )
+handleChanges = event => {
+  this.setState({
+      credentials: {
+         ...this.state.credentials,
+         [event.target.name]: event.target.value
+      }
+  })
 }
 
+handleSubmit = event => {
+  event.preventDefault();
+  axios.post('http://localhost:5000/api/login', this.state.credentials)
+  .then(response => {
+      console.log(response);
+      localStorage.setItem('token', response.data.payload);
+      this.props.history.push('/friends');
+  })
+  .catch(error => console.log(error))
+}
+render() {
+ return(
+     <form onSubmit={this.handleSubmit}>
+         <label htmlFor='username'>Username: </label>
+         <input name='username' id='username' type='text' value={this.state.credentials.username} onChange={this.handleChanges}/>
+         <label htmlFor='password'>Password: </label>
+         <input name='password' id='password' type='password' value={this.state.credentials.password} onChange={this.handleChanges}/>
+         <button type='submit'>Log in</button>
+
+     </form>
+ )
+}
+}
 
 export default Login;

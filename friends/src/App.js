@@ -1,15 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Login from "./components/login"
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import PrivateRoute from "./components/PrivateRoute";
+import Login from "./components/Login"
+import FriendsList from "./components/FriendList"
 
 function App() {
   return (
-    <div className="App">
-      <h1>THIS IS MY HOMEPAGE!</h1>
-      <Login />
-
-    </div>
+    <Router>
+      <div className="App">
+        <header className='App-header'>
+          <Link to='/login'>Login</Link>
+          <Link to='/friends'>Friends</Link>
+          <Switch>
+            <PrivateRoute exact path='/friends' component={FriendsList}/>
+            <Route path='/login' component={Login} />
+            <Route component={Login} />
+          </Switch>
+        </header>
+      </div>
+    </Router>
   );
 }
 
