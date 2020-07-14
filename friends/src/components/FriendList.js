@@ -25,9 +25,6 @@ const FriendsList = () => {
     }, []);
 
 
-
-
-
     return (
         <>
             <FriendForm getFriends={getFriends} />

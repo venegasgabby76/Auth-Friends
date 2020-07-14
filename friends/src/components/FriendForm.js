@@ -9,7 +9,7 @@ const FriendForm = props => {
         id: "",
         name: "",
         age: "",
-        email: ""
+        email: "",
     })
 
     const handleChange = e => {
@@ -35,7 +35,7 @@ const FriendForm = props => {
             id: "",
             name: "",
             age: "",
-            email: ""
+            email: "",
         })
         console.log("form is submitting", addFriend)
     }
@@ -73,10 +73,6 @@ const FriendForm = props => {
             />
             <br />
             <button>Add New Friend</button>
-            {/* <button onClick={() => {
-                props.addingSmurf(addSmurf)
-            }}>
-                Lets add them Smurfs</button> */}
         </form>
     )
 }
